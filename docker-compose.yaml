@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  app:
+    build: ./
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    env_file:
+      - .env
+    restart: always
+    volumes:
+      - .:/app
+  db:
+    container_name: postgres
+    image: postgres:15.1
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=${DB_DATABASE_NAME}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    expose:
+      - 5432:5432
+    volumes:
+      - .db_data/postgres/:/var/lib/postgresql/data
+      - .:/docker-entrypoint-initdb.d
+    restart: always
+  redis:
+    container_name: redis
+    image: redis:7.0.8-alpine
+    restart: always
+    expose:
+      - 6380:6379
+    command: redis-server --save 20 1
+    volumes:
+      - .redis_data:/data
