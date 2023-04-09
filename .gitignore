@@ -1,2 +1,5 @@
 venv/
 **/__pycache__
+.db_data
+.redis_data
+.env

@@ -18,10 +18,10 @@ services:
     env_file:
       - .env
     environment:
-      - POSTGRES_DB=${DB_DATABASE_NAME}
-      - POSTGRES_USER=${DB_USERNAME}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-    expose:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+    ports:
       - 5432:5432
     volumes:
       - .db_data/postgres/:/var/lib/postgresql/data
